@@ -23,4 +23,4 @@ PYTHON_ENV = os.getenv('PYTHON_ENV')
 IS_DEVELOPMENT = PYTHON_ENV == 'development'
 
 SECRET_KEY = os.getenv('SECRET_KEY') or generate_secret_key()
-FLASK_RUN_PORT = os.getenv('FLASK_RUN_PORT') or 9000
+FLASK_RUN_PORT = os.getenv('PORT') or 9000
