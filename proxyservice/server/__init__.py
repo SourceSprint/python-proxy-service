@@ -23,11 +23,6 @@ def proxy_get():
 
         parameters = request.get_json(force=True)
 
-        if 'solve' in parameters:
-            solve = parameters['solve']
-        else:
-            solve = False
-
         if 'proxy' in parameters:
             proxy = parameters['proxy']
         else:

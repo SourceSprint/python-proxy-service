@@ -78,7 +78,7 @@ class Router:
 
         self.session = Session()
 
-        self.identifier = classify(url, [hawk_cf_key, captcha_key])
+        self.identifier = classify(url)
         persisted = InstanceCache.get(self.identifier)
 
         if persisted:
