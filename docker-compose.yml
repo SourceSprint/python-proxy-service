@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  proxy-service:
+    image: boxpositron/python-proxy-service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+
+
+    ports:
+      - '9000:9000'
+    environment:
+      - PORT=9000
