@@ -26,7 +26,12 @@ def proxy_get():
         if 'proxy' in parameters:
             proxy = parameters['proxy']
         else:
-            raise UnauthorizedError('No proxy specified')
+            proxy = None
+
+        if "intercept" in parameters:
+            intercept = parameters['intercept']
+        else:
+            intercept = False
 
         if 'url' in parameters:
             url = parameters['url']
@@ -50,7 +55,9 @@ def proxy_get():
 
         router = Router(url=url, proxy=proxy,
                         timeout=timeout,
-                        headers=headers)
+                        headers=headers,
+                        disable_intercept=not intercept
+                        )
 
         data = router.fetch_page(params=params)
 
@@ -66,8 +73,10 @@ def proxy_get():
         )
 
     except UnauthorizedError as e:
+        print(e)
+
         error = {
-            'error': str(e),
+            'message': str(e),
             'success': False,
             'type': 'fetch-route'
         }
@@ -77,7 +86,7 @@ def proxy_get():
     except Exception as e:
 
         error = {
-            'error': str(e),
+            'message': str(e),
             'success': False,
             'type': 'fetch-route'
         }
@@ -94,7 +103,12 @@ def proxy_post():
         if 'proxy' in parameters:
             proxy = parameters['proxy']
         else:
-            raise UnauthorizedError('No proxy specified')
+            proxy
+
+        if "intercept" in parameters:
+            intercept = parameters['intercept']
+        else:
+            intercept = False
 
         if 'url' in parameters:
             url = parameters['url']
@@ -122,7 +136,7 @@ def proxy_post():
             body = None
 
         router = Router(url=url, proxy=proxy, timeout=timeout,
-                        headers=headers, body=body)
+                        headers=headers, body=body, disable_intercept=not intercept)
 
         data = router.submit_data(params)
 
@@ -139,7 +153,7 @@ def proxy_post():
 
     except UnauthorizedError as e:
         error = {
-            'error': str(e),
+            'message': str(e),
             'success': False,
             'type': 'post-route'
         }
@@ -149,7 +163,7 @@ def proxy_post():
     except Exception as e:
 
         error = {
-            'error': str(e),
+            'message': str(e),
             'success': False,
             'type': 'post-route'
         }
@@ -161,7 +175,7 @@ def proxy_post():
 def handle_page_not_found(e):
 
     error = {
-        'error': str(e),
+        'message': str(e),
         'success': False
     }
 
