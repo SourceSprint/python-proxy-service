@@ -38,10 +38,13 @@ class Router:
         headers: Union[dict, None] = None,
         body: Union[dict, None] = None,
         timeout: Union[int, None] = None,
+        disable_intercept: bool = False
     ):
 
         self.url = url
         self.body = body
+
+        self.disable_intercept = disable_intercept
 
         if timeout is None:
             self.timeout = 10
@@ -72,9 +75,6 @@ class Router:
                     'http': proxy,
                     'https': proxy.replace('https', 'http')
                 }
-
-        if not self.proxy:
-            raise Exception('No proxy provided')
 
         self.session = Session()
 
