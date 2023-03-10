@@ -53,10 +53,16 @@ def proxy_get():
         else:
             headers = None
 
+        if 'verify_ssl' in parameters:
+            verify_ssl = parameters['verify_ssl']
+        else:
+            verify_ssl = True
+
         router = Router(url=url, proxy=proxy,
                         timeout=timeout,
                         headers=headers,
-                        disable_intercept=not intercept
+                        disable_intercept=not intercept,
+                        verify_ssl=verify_ssl
                         )
 
         data = router.fetch_page(params=params)
@@ -135,8 +141,13 @@ def proxy_post():
         else:
             body = None
 
+        if 'verify_ssl' in parameters:
+            verify_ssl = parameters['verify_ssl']
+        else:
+            verify_ssl = True
+
         router = Router(url=url, proxy=proxy, timeout=timeout,
-                        headers=headers, body=body, disable_intercept=not intercept)
+                        headers=headers, body=body, disable_intercept=not intercept, verify_ssl=verify_ssl)
 
         data = router.submit_data(params)
 

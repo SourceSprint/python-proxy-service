@@ -38,11 +38,13 @@ class Router:
         headers: Union[dict, None] = None,
         body: Union[dict, None] = None,
         timeout: Union[int, None] = None,
-        disable_intercept: bool = False
+        disable_intercept: bool = False,
+        verify_ssl: bool = True
     ):
 
         self.url = url
         self.body = body
+        self.verify_ssl = verify_ssl
 
         self.disable_intercept = disable_intercept
 
@@ -103,10 +105,10 @@ class Router:
         try:
             if not self.headers:
                 response = self.session.post(
-                    self.url, proxies=self.proxy, params=params, data=self.body, timeout=self.timeout)
+                    self.url, proxies=self.proxy, params=params, data=self.body, timeout=self.timeout, verify=self.verify_ssl)
             else:
                 response = self.session.post(
-                    self.url, proxies=self.proxy, params=params, headers=self.headers, data=self.body, timeout=self.timeout)
+                    self.url, proxies=self.proxy, params=params, headers=self.headers, data=self.body, timeout=self.timeout, verify=self.verify_ssl)
 
             headers = dict(response.headers)
 
@@ -185,10 +187,10 @@ class Router:
 
             if not self.headers:
                 response = self.session.get(
-                    self.url, proxies=self.proxy, allow_redirects=self.disable_intercept, timeout=self.timeout, params=params)
+                    self.url, proxies=self.proxy, allow_redirects=self.disable_intercept, timeout=self.timeout, params=params, verify=self.verify_ssl)
             else:
                 response = self.session.get(
-                    self.url, proxies=self.proxy, headers=self.headers, allow_redirects=self.disable_intercept, timeout=self.timeout, params=params)
+                    self.url, proxies=self.proxy, headers=self.headers, allow_redirects=self.disable_intercept, timeout=self.timeout, params=params, verify=self.verify_ssl)
 
             headers = dict(response.headers)
 
