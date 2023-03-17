@@ -23,6 +23,11 @@ def proxy_get():
 
         parameters = request.get_json(force=True)
 
+        if 'url' in parameters:
+            url = parameters['url']
+        else:
+            raise UnauthorizedError('No url specified')
+
         if 'proxy' in parameters:
             proxy = parameters['proxy']
         else:
@@ -32,11 +37,6 @@ def proxy_get():
             intercept = parameters['intercept']
         else:
             intercept = False
-
-        if 'url' in parameters:
-            url = parameters['url']
-        else:
-            raise UnauthorizedError('No url specified')
 
         if 'params' in parameters:
             params = parameters['params']
@@ -56,7 +56,7 @@ def proxy_get():
         if 'verify_ssl' in parameters:
             verify_ssl = parameters['verify_ssl']
         else:
-            verify_ssl = True
+            verify_ssl = False
 
         router = Router(url=url, proxy=proxy,
                         timeout=timeout,
@@ -106,6 +106,11 @@ def proxy_post():
 
         parameters = request.get_json(force=True)
 
+        if 'url' in parameters:
+            url = parameters['url']
+        else:
+            raise UnauthorizedError('No url specified')
+
         if 'proxy' in parameters:
             proxy = parameters['proxy']
         else:
@@ -115,11 +120,6 @@ def proxy_post():
             intercept = parameters['intercept']
         else:
             intercept = False
-
-        if 'url' in parameters:
-            url = parameters['url']
-        else:
-            raise UnauthorizedError('No url specified')
 
         if 'params' in parameters:
             params = parameters['params']
